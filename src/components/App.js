@@ -1,4 +1,4 @@
-// rfcp -> crear un componente con el plugin
+// * rfcp -> crear un componente con el plugin
 
 import React from 'react';
 import './App.css';
