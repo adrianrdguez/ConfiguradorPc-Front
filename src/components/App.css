@@ -5,14 +5,3 @@
 input[type=range] {
   width: 100%;
 }
-
-.circulos {
-  border: 1px solid black;
-  padding: 5%;
-  width: 40%;
-  border-radius: 1000px;
-}
-
-.circulos > img {
-  width: 100%;
-}
