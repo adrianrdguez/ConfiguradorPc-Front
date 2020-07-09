@@ -5,3 +5,7 @@
 input[type=range] {
   width: 100%;
 }
+
+img {
+  width: 100px;
+}

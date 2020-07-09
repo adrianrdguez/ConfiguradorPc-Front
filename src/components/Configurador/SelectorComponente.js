@@ -1,64 +1,88 @@
-import React, { Component } from 'react'
-import DataTable from 'react-data-table-component';
-import Componente from './Componente'
+import React, { Component } from 'react';
+import MUIDataTable from "mui-datatables";
+import Componente from './Componente';
+import axios from 'axios'
+
+
 export default class SelectorComponente extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             columns: [
                 {
-                    selector: 'imagen'
+                    name: "image",
+                    label: "Imagen",
+                    options: {
+                        searchable: false,
+                        filter: false,
+                        sort: false,
+                        customBodyRender: (value, tableMeta, updateValue) => (
+                            <img src={value} alt="gatito"></img>
+                        )
+                    }
                 },
                 {
-                  selector: 'name',
+                    name: "brand",
+                    label: "Compañia",
+                    options: {
+                        display: 'false',
+                        searchable: false,
+                        filterType: 'multiselect',
+                        filter: true,
+                        sort: false,
+                    }
+                },
+                {
+                    name: "name",
+                    label: "Nombre",
+                    options: {
+                        filter: true,
+                        sort: false,
+                    }
                 },
             ],
-            data: [
-            { 
-                imagen: 'img1 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img2 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img3 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img4 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img5 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img6 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-            { 
-                imagen: 'img7 ' + this.props.data.name,
-                name: this.props.data.name,
-            },
-        ]
-    };
+            options: {
+                filterType: 'textField',
+                download: false,
+                print: false,
+                responsive: "standard",
+                viewColumns: false,
+                rowsPerPage: 5,
+                rowsPerPageOptions: [],
+                expandableRows: true,
+                expandableRowsHeader: false,
+                onRowExpansionChange: (currentRowsExpanded) => {
+
+                },
+                expandableRowsOnClick: true,
+                renderExpandableRow: (rowData, rowMeta) => {
+                    const colSpan = rowData.length + 1;
+                    return (
+                        <Componente colspan={colSpan} rowdata={rowData} />
+                    );
+                },
+                selectableRowsHeader: false,
+                selectableRowsHideCheckboxes: true
+            }
+        };
     }
+    componentDidMount() {
+        axios.get(`http://192.168.100.108:3000/` + this.props.data.tipo)
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+                this.setState({ data: data });
+            })
+    }
+
     render() {
         return (
-            <DataTable
-            noTableHead
-            noHeader
-            columns={this.state.columns}
-            data={this.state.data}
-            expandableRows
-            striped
-            highlightOnHover
-            expandableRowsHideExpander
-            expandOnRowClicked
-            expandableRowsComponent={<Componente/>}
-    />
+            <MUIDataTable
+                data={this.state.data}
+                columns={this.state.columns}
+                options={this.state.options}
+            />
         )
     }
 }
