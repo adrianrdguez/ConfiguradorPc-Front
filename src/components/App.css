@@ -9,3 +9,7 @@ input[type=range] {
 img {
   width: 100px;
 }
+
+table > thead {
+  display: none !important;
+}

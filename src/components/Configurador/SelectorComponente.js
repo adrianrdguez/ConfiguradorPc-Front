@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import MUIDataTable from "mui-datatables";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Componente from './Componente';
 import axios from 'axios'
 
@@ -52,9 +55,6 @@ export default class SelectorComponente extends Component {
                 rowsPerPageOptions: [],
                 expandableRows: true,
                 expandableRowsHeader: false,
-                onRowExpansionChange: (currentRowsExpanded) => {
-
-                },
                 expandableRowsOnClick: true,
                 renderExpandableRow: (rowData, rowMeta) => {
                     const colSpan = rowData.length + 1;
@@ -68,21 +68,29 @@ export default class SelectorComponente extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`http://192.168.100.108:3000/` + this.props.data.tipo)
+        axios.get(`http://192.168.100.108:3000/` + this.props.data[1])
             .then(res => {
                 const data = res.data;
-                console.log(data)
                 this.setState({ data: data });
             })
     }
 
     render() {
+        const theme = createMuiTheme({
+            palette: { type: 'light' },
+            typography: { useNextVariants: true },
+        });
         return (
-            <MUIDataTable
-                data={this.state.data}
-                columns={this.state.columns}
-                options={this.state.options}
-            />
+            <TableRow>
+                <TableCell colSpan={this.props.colspan}>
+                    <MuiThemeProvider theme={theme}>
+                        <MUIDataTable
+                            data={this.state.data}
+                            columns={this.state.columns}
+                            options={this.state.options}
+                        />
+                    </MuiThemeProvider>
+                </TableCell></TableRow>
         )
     }
 }
