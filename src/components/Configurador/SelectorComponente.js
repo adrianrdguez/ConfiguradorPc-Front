@@ -44,6 +44,15 @@ export default class SelectorComponente extends Component {
                         sort: false,
                     }
                 },
+                {
+                    name: "price",
+                    options: {
+                        display: 'false',
+                        searchable: false,
+                        filter: false,
+                        sort: false,
+                    }
+                },
             ],
             options: {
                 filterType: 'textField',
@@ -68,7 +77,7 @@ export default class SelectorComponente extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`http://192.168.100.108:3000/` + this.props.data[1])
+        axios.get(`http://192.168.100.108:3001/` + this.props.data[1])
             .then(res => {
                 const data = res.data;
                 this.setState({ data: data });
