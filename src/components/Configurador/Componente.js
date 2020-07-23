@@ -3,14 +3,21 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { orange } from '@material-ui/core/colors';
 
 
 export default class Componente extends Component {
     constructor(props) {
         super(props);
         this.state = {}
-        }    
+        } 
     render() {
+        const theme = createMuiTheme({
+            palette: {
+              primary: orange,
+            },
+          });
         return (
                 <TableRow>
                     <TableCell colSpan={this.props.colspan}>
@@ -26,9 +33,13 @@ export default class Componente extends Component {
                                 </div>   
                             </Grid>
                             <Grid text-align='center' item xs={6} sm={3}>
-                                <div direction="row" justify="space-between" alignItems="center">
+                                <div>
                                     {this.props.rowdata[3]}
-                                    <Button variant="contained" color="primary">Add</Button>
+                                    <div>
+                                        <ThemeProvider theme={theme}>
+                                            <Button onClick={() => this.props.prueba()} variant="contained" color="primary">Añadir</Button>
+                                        </ThemeProvider>
+                                    </div>
                                 </div>   
                             </Grid>
                         </Grid>
