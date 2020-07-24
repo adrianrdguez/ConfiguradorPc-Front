@@ -24,10 +24,10 @@ export default class Componente extends Component {
                         <Grid justify="center" alignItems="center" container spacing={2}>
                             <Grid  item xs={6} sm={3}>
                                 <div>
-                                <img alt='gatito' src ='/pccom.svg'></img>
+                                    <img alt='gatito' src ='/pccom.svg'></img>
                                 </div>   
                             </Grid>
-                            <Grid text-align='center' item xs={12} sm={6}>
+                            <Grid text-align='center' item xs={6} sm={3}>
                                 <div>
                                     {this.props.rowdata[2]}
                                 </div>   
@@ -35,12 +35,14 @@ export default class Componente extends Component {
                             <Grid text-align='center' item xs={6} sm={3}>
                                 <div>
                                     {this.props.rowdata[3]}
+                                </div>   
+                            </Grid>
+                            <Grid text-align='center' item xs={6} sm={3}>
                                     <div>
                                         <ThemeProvider theme={theme}>
-                                            <Button onClick={() => this.props.prueba()} variant="contained" color="primary">Añadir</Button>
+                                            <Button onClick={() => this.props.prueba(this.props.rowdata)} variant="contained" color="primary">Añadir</Button>
                                         </ThemeProvider>
-                                    </div>
-                                </div>   
+                                    </div> 
                             </Grid>
                         </Grid>
                     </TableCell>
