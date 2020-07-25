@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import MUIDataTable from "mui-datatables";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Componente from './Componente';
-import { palette } from '@material-ui/system';
+import CeldaConfigurador from './CeldaConfigurador';
 import axios from 'axios'
 
 
@@ -50,6 +49,15 @@ export default class SelectorComponente extends Component {
                 },
                 {
                     name: "price",
+                    options: {
+                        display: 'false',
+                        searchable: false,
+                        filter: false,
+                        sort: false,
+                    }
+                },
+                {
+                    name: "link",
                     options: {
                         display: 'false',
                         searchable: false,
@@ -105,32 +113,12 @@ export default class SelectorComponente extends Component {
                                 data={this.state.data}
                                 columns={this.state.columns}
                                 options={this.state.options}
-                            />
-                            :   <Grid style={{backgroundColor:'white',borderRadius:10}} justify="center" alignItems="center" container spacing={2}>
-                                    <Grid item xs={6} sm={3}>
-                                        <div>
-                                            {this.state.item[0]}
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={6} sm={3}>
-                                        <div>
-                                            <img alt='gatito' src='/pccom.svg'></img>
-                                        </div>
-                                    </Grid>
-                                    <Grid text-align='center' item xs={6} sm={3}>
-                                        <div style={{ color: 'black' }}>
-                                            {this.state.item[2]}
-                                        </div>
-                                    </Grid>
-                                    <Grid text-align='center' item xs={6} sm={3}>
-                                        <div style={{ color: 'black' }}>
-                                            {this.state.item[3]}
-                                        </div>
-                                    </Grid>
-                                </Grid>
+                              />
+                            : <CeldaConfigurador datos={this.state.item}/> 
                         }
                     </MuiThemeProvider>
-                </TableCell></TableRow>
+                </TableCell>
+            </TableRow>
         )
     }
 }
