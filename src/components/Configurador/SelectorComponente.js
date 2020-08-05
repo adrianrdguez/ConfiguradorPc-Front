@@ -113,6 +113,7 @@ export default class SelectorComponente extends Component {
     handleOnClickComponente(array) {
         this.setState({ boolean: !this.state.boolean })
         if (array) {
+            this.props.toggleExpandable(array, this.props.index);
             this.setState({ item: array });
         }
     }
