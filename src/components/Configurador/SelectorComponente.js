@@ -94,6 +94,19 @@ export default class SelectorComponente extends Component {
             .then(res => {
                 const data = res.data;
                 this.setState({ data: data });
+            }).catch(() => {
+                import(`../../json/${this.props.data[1]}.json`).then(({ default: myData }) => {
+                    const data = myData;
+                    this.setState({ data: data });
+                }).catch(() => {
+                    this.setState({ data:     {
+                        "brand": 'brand',
+                        "name": 'nombre',
+                        "price": "precio",
+                        "image": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg",
+                        "link": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg"
+                    } });
+                });
             })
     }
     ponerComponente(array) {
@@ -117,8 +130,8 @@ export default class SelectorComponente extends Component {
                                 data={this.state.data}
                                 columns={this.state.columns}
                                 options={this.state.options}
-                              />
-                            : <ComponenteElegido quitar={this.clickQuitar} datos={this.state.item}/> 
+                            />
+                            : <ComponenteElegido quitar={this.clickQuitar} datos={this.state.item} />
                         }
                     </MuiThemeProvider>
                 </TableCell>
