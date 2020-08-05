@@ -44,6 +44,7 @@ export default class ConfiguradorManual extends Component {
         selectableRowsHideCheckboxes: false,
         sort: false,
         viewColumns: false,
+        responsive: "standard",
         selectableRows: "none",
         renderExpandableRow: (rowData, rowMeta) => {
           const colSpan = rowData.length + 1;
