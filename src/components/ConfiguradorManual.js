@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import MUIDataTable from "mui-datatables";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import SelectorComponente from './Configurador/SelectorComponente';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
 
 export default class ConfiguradorManual extends Component {
   constructor(props) {
@@ -25,6 +28,7 @@ export default class ConfiguradorManual extends Component {
         { name: 'Memoria RAM', tipo: 'rams' },
         { name: 'Ventilador CPU', tipo: 'computerCoolings' },
         { name: 'Disco duro', tipo: 'hardDrives' },
+        { name: 'Disco duro 2', tipo: 'hardDrives' },
         { name: 'Caja/Torre', tipo: 'cases' },
         { name: 'Fuente de alimentación', tipo: 'powerSupplies' },
       ],
@@ -57,14 +61,24 @@ export default class ConfiguradorManual extends Component {
       typography: { useNextVariants: true },
     });
     return (
-      <MuiThemeProvider theme={theme}>
-        <MUIDataTable
-          title={"Configurador de PC"}
-          data={this.state.data}
-          columns={this.state.columns}
-          options={this.state.options}
-        />
-      </MuiThemeProvider>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <Paper style={{ height: 60}}>Configurador Automatico "Beta"</Paper>
+        </Grid>
+        <Grid item xs={9}>
+          <MuiThemeProvider theme={theme}>
+            <MUIDataTable
+              title={"Configurador de PC"}
+              data={this.state.data}
+              columns={this.state.columns}
+              options={this.state.options}
+            />
+          </MuiThemeProvider>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper style={{ height: 200}}>Precio & Shit</Paper>
+        </Grid>
+    </Grid>
     )
   }
 }

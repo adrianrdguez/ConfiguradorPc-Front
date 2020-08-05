@@ -4,7 +4,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Componente from './Componente';
-import CeldaConfigurador from './CeldaConfigurador';
+import ComponenteElegido from './ComponenteElegido';
 import axios from 'axios'
 
 
@@ -12,7 +12,8 @@ export default class SelectorComponente extends Component {
 
     constructor(props) {
         super(props);
-        this.handleClick = this.cual.bind(this);
+        this.clickPoner = this.ponerComponente.bind(this);
+        this.clickQuitar = this.quitarComponente.bind(this);
         this.state = {
             boolean: true,
             columns: [
@@ -80,7 +81,7 @@ export default class SelectorComponente extends Component {
                 renderExpandableRow: (rowData, rowMeta) => {
                     const colSpan = rowData.length + 1;
                     return (
-                        <Componente prueba={this.handleClick} colspan={colSpan} rowdata={rowData} />
+                        <Componente poner={this.clickPoner} colspan={colSpan} rowdata={rowData} />
                     );
                 },
                 selectableRowsHeader: false,
@@ -89,15 +90,18 @@ export default class SelectorComponente extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`http://192.168.100.108:3001/` + this.props.data[1])
+        axios.get(`http://192.168.1.53:3001/` + this.props.data[1])
             .then(res => {
                 const data = res.data;
                 this.setState({ data: data });
             })
     }
-    cual(array) {
+    ponerComponente(array) {
         this.setState({ boolean: !this.state.boolean })
         this.setState({ item: array });
+    }
+    quitarComponente() {
+        this.setState({ boolean: !this.state.boolean })
     }
     render() {
         const theme = createMuiTheme({
@@ -114,7 +118,7 @@ export default class SelectorComponente extends Component {
                                 columns={this.state.columns}
                                 options={this.state.options}
                               />
-                            : <CeldaConfigurador datos={this.state.item}/> 
+                            : <ComponenteElegido quitar={this.clickQuitar} datos={this.state.item}/> 
                         }
                     </MuiThemeProvider>
                 </TableCell>
