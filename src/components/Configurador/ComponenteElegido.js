@@ -34,7 +34,7 @@ export default class CeldaConfigurador extends Component {
                 <Grid text-align='center' item sm={1}>
                     <div style={{ color: 'black' }}>
                         <IconButton onClick={() => this.props.quitar()} >
-                            <ClearIcon fontSize="medium" />
+                            <ClearIcon fontSize="small" />
                         </IconButton>
                     </div>
                 </Grid>

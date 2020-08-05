@@ -90,24 +90,25 @@ export default class SelectorComponente extends Component {
         };
     }
     componentDidMount() {
-        axios.get(`http://192.168.1.53:3001/` + this.props.data[1])
+        import(`../../json/${this.props.data[1]}.json`).then(({ default: myData }) => {
+            const data = myData;
+            this.setState({ data: data });
+        }).catch(() => {
+            axios.get(`http://192.168.1.53:3001/` + this.props.data[1])
             .then(res => {
                 const data = res.data;
                 this.setState({ data: data });
             }).catch(() => {
-                import(`../../json/${this.props.data[1]}.json`).then(({ default: myData }) => {
-                    const data = myData;
-                    this.setState({ data: data });
-                }).catch(() => {
-                    this.setState({ data:     {
-                        "brand": 'brand',
-                        "name": 'nombre',
-                        "price": "precio",
-                        "image": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg",
-                        "link": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg"
-                    } });
-                });
+                this.setState({ data:     {
+                    "brand": 'brand',
+                    "name": 'nombre',
+                    "price": "precio",
+                    "image": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg",
+                    "link": "https://thumb.pccomponentes.com/w-530-530/articles/17/173598/1539027947000-1435918.jpg"
+                } });
             })
+        });
+
     }
     handleOnClickComponente(array) {
         this.setState({ boolean: !this.state.boolean })
