@@ -12,10 +12,10 @@ export default class SelectorComponente extends Component {
 
     constructor(props) {
         super(props);
-        this.clickPoner = this.ponerComponente.bind(this);
-        this.clickQuitar = this.quitarComponente.bind(this);
+        this.onClickHandler = this.handleOnClickComponente.bind(this);
         this.state = {
             boolean: true,
+            item: [],
             columns: [
                 {
                     name: "image",
@@ -24,7 +24,7 @@ export default class SelectorComponente extends Component {
                         searchable: false,
                         filter: false,
                         sort: false,
-                        customBodyRender: (value, tableMeta, updateValue) => (
+                        customBodyRender: (value) => (
                             <img src={value} alt="gatito"></img>
                         )
                     }
@@ -75,17 +75,17 @@ export default class SelectorComponente extends Component {
                 viewColumns: false,
                 rowsPerPage: 5,
                 rowsPerPageOptions: [],
+                selectableRowsHeader: false,
+                selectableRowsHideCheckboxes: true,
                 expandableRows: true,
                 expandableRowsHeader: false,
                 expandableRowsOnClick: true,
                 renderExpandableRow: (rowData, rowMeta) => {
                     const colSpan = rowData.length + 1;
                     return (
-                        <Componente poner={this.clickPoner} colspan={colSpan} rowdata={rowData} />
+                        <Componente poner={this.onClickHandler} colspan={colSpan} rowdata={rowData} />
                     );
                 },
-                selectableRowsHeader: false,
-                selectableRowsHideCheckboxes: true
             }
         };
     }
@@ -109,12 +109,11 @@ export default class SelectorComponente extends Component {
                 });
             })
     }
-    ponerComponente(array) {
+    handleOnClickComponente(array) {
         this.setState({ boolean: !this.state.boolean })
-        this.setState({ item: array });
-    }
-    quitarComponente() {
-        this.setState({ boolean: !this.state.boolean })
+        if (array) {
+            this.setState({ item: array });
+        }
     }
     render() {
         const theme = createMuiTheme({
@@ -125,13 +124,17 @@ export default class SelectorComponente extends Component {
             <TableRow>
                 <TableCell colSpan={this.props.colspan}>
                     <MuiThemeProvider theme={theme}>
+                        {this.state.item.length !== 0
+                            ? <ComponenteElegido quitar={this.onClickHandler} datos={this.state.item} />
+                            : <div></div>
+                        }
                         {this.state.boolean
                             ? <MUIDataTable
                                 data={this.state.data}
                                 columns={this.state.columns}
                                 options={this.state.options}
                             />
-                            : <ComponenteElegido quitar={this.clickQuitar} datos={this.state.item} />
+                            : <div></div>
                         }
                     </MuiThemeProvider>
                 </TableCell>
